@@ -354,6 +354,13 @@ get_kernel_source() {
 
     # Apply custom kernel patches
     [[ "${auto_patch}" == "true" || "${auto_patch}" == "yes" ]] && apply_patch
+
+    # Add YUGA_AC3 to kernel
+    cd ${kernel_path}
+    sed -i '/0x257A/a\#define YUGA_VENDOR_AC3\t0x1286\n#define YUGA_PRODUCT_AC3\t0x4E3C' drivers/usb/serial/option.c
+    sed -i '/YUGA_PRODUCT_CEM600)/i\\t{ USB_DEVICE(YUGA_VENDOR_AC3, YUGA_PRODUCT_AC3) },' drivers/usb/serial/option.c
+    sed -i "/id->driver_info/ r ${script_path}/CLM920_AC3.txt" drivers/usb/serial/option.c
+
 }
 
 headers_install() {
