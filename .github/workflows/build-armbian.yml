@@ -42,6 +42,7 @@ on:
           - emb3531
           - fine3399
           - firefly-rk3399
+          - tpm312
           - jp-tvbox
           - h28k
           - h66k
@@ -318,7 +319,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Rebuild Armbian
-        uses: ophub/amlogic-s9xxx-armbian@main
+        uses: MoorCorPa/amlogic-s9xxx-armbian@main
         if: ${{ steps.clean.outputs.status }} == 'success' && !cancelled()
         with:
           build_target: armbian
